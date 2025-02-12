@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun!</title>
+    <style>
+        @keyframes glowingText {
+            0% { background-position: -200%; }
+            50% { background-position: 200%; }
+            100% { background-position: -200%; }
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff, #ffffff);
+            padding: 0;
+            margin: 0;
+            color: rgb(0, 0, 0);
+            overflow: hidden;
+        }
+        .container, .popup-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: all 0.6s ease-in-out;
+        }
+        .animation-slot {
+            font-size: 10rem;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+            background: linear-gradient(90deg, #ff7070, #e9e9e9, #ff7070);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glowingText 10s infinite linear;
+        }
+        .popup-container {
+            display: none;
+            background: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+            text-align: left;
+            padding: 20px; /* Menambahkan ruang di dalam container */
+            margin: 20px auto; /* Memberikan margin di sekeliling dan auto untuk center */
+            max-width: 600px; /* Membatasi lebar agar tidak terlalu besar */
+            border-radius: 10px; /* Memberikan sudut lembut */
+            /*box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Efek bayangan agar lebih elegan */
+            line-height: 1.6; /* Spasi antar baris agar lebih mudah dibaca */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .popup-container video {
+            max-width: 50%;
+        }
+        .surprise-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            padding: 40px;
+            overflow-y: auto;
+            font-weight: bold;
+            -webkit-text-stroke: 0,5px black;
+            color: #ffffff;
+            text-align: rgb(214, 214, 214)center;
+            transition: background 0.5s ease-in-out;
+        }
+        .zigzag {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .zigzag div {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .zigzag div:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        .zigzag img {
+            width: 180px;
+            height: 180px;
+            border-radius: 15px;
+            margin: 15px;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .zigzag p {
+            max-width: 300px;
+            font-size: 20px;
+        }
+        .popup-show {
+            display: flex;
+            opacity: 1;
+        }
+        .popup-container button, .surprise-container button {
+            background-color: #ff3366;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+        .popup-container button:hover, .surprise-container button:hover {
+            background-color: #ff6699;
+        }
+        .zigzag div:not(:hover) img {
+            opacity: 0.4;
+        }
+        .heart-icon {
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="lagu.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung tag audio.
+    </audio>
+    <div id="mainContainer" class="container">
+        <div class="animation-slot">CACA</div>
+        <h1>Happy Birthday My Love</h1>
+        <p>I can't give you much yet, I hope you like it!💖</p>
+        <div id="heart" class="heart-icon" draggable="true" onclick="playMusic()">❤️</div>
+    </div>
+    
+    <div id="popupContainer" class="popup-container">
+        <video id="surpriseVideo" autoplay loop muted playsinline>
+            <source src="klip-1.mp4" type="video/mp4">
+            Browser Anda tidak mendukung pemutaran video.
+        </video>
+        <p>My Dearest Love,</p>
+
+            <p>Since the day you came into my life, everything has changed for the better. The world that once seemed so plain is now lied with color, all because of you. You've brought light into my life, chasing away the darkness, and I feel so blessed to have you by my side.</p>
+            
+            <p>On your special day, I want you to know just how much you mean to me. You are my source of happiness, my inspiration, and the reason I feel grounded in this world With you, everything seems Imghter.</p>
+            
+            <p>Happy birthday, my love! I hope this day brings you as much joy as you bring into my life every single day I wish you all the happiness, success, and love you deserve, not only today but throughout the entire year</p>
+            
+            <p>Always and forever yours,❤️</p>
+        <button onclick="showSurprise()">Kejutan Selanjutnya</button>
+    </div>
+    
+    <div id="surpriseContainer" class="surprise-container">
+        <h2>Beautiful Memories Together❤️</h2>
+        <div class="zigzag" id="zigzagContainer">
+            <div data-bg="1.jpg">
+                <img src="1.jpg" alt="Kenangan 1">
+                <p>This is the first time we met We are still embarrassed</p>
+            </div>
+            <div data-bg="2.jpg">
+                <img src="2.jpg" alt="Kenangan 2">
+                <p>And here I bought you flowers for you to look after</p>
+            </div>
+            <div data-bg="3.jpg">
+                <img src="3.jpg" alt="Kenangan 3">
+                <p>and here I promise you to buy the first ring</p>
+            </div>
+            <div data-bg="4.jpg">
+                <img src="4.jpg" alt="Kenangan 4">
+                <p>and you have been wearing the hijab until now</p>
+            </div>
+            <div data-bg="5.jpg">
+                <img src="5.jpg" alt="Kenangan 4">
+                <p>Are is favorit we meet in here</p>
+            </div>
+            <div data-bg="6.jpg">
+                <img src="6.jpg" alt="Kenangan 4">
+                <p>And this was the first time we went out of town directly to Bromo</p>
+            </div>
+            <div data-bg="7.jpg">
+                <img src="7.jpg" alt="Kenangan 4">
+                <p>The view is very beautiful, isn't it like you?</p>
+            </div>
+            <div data-bg="8.jpg">
+                <img src="8.jpg" alt="Kenangan 4">
+                <p>❤️</p>
+            </div>
+        </div>
+        <button onclick="closeSurprise()">Tutup</button>
+    </div>
+
+    <script>
+        let surpriseContainer = document.getElementById('surpriseContainer');
+        let zigzagContainer = document.getElementById('zigzagContainer');
+        
+        zigzagContainer.addEventListener('mouseover', function(event) {
+            if (event.target.tagName === 'IMG') {
+                let parentDiv = event.target.closest('div');
+                let newBg = parentDiv.getAttribute('data-bg');
+                surpriseContainer.style.backgroundImage = `url('${newBg}')`;
+            }
+        });
+
+        let heart = document.getElementById('heart');
+        let mainContainer = document.getElementById('mainContainer');
+        let popupContainer = document.getElementById('popupContainer');
+        let startY;
+
+        heart.addEventListener('dragstart', function(event) {
+            startY = event.clientY;
+        });
+
+        heart.addEventListener('dragend', function(event) {
+            let endY = event.clientY;
+            if (endY > startY + 50) {
+                mainContainer.style.opacity = '0';
+                setTimeout(() => {
+                    mainContainer.style.display = 'none';
+                    popupContainer.classList.add('popup-show');
+                }, 500);
+            }
+        });
+
+        function showSurprise() {
+            popupContainer.classList.remove('popup-show');
+            setTimeout(() => {
+                popupContainer.style.display = 'none';
+                surpriseContainer.style.display = 'block';
+            }, 500);
+        }
+
+        function closeSurprise() {
+            surpriseContainer.style.display = 'none';
+            setTimeout(() => {
+                mainContainer.style.display = 'block';
+                mainContainer.style.opacity = '1';
+            }, 500);
+        }
+        function playMusic() {
+            let music = document.getElementById('bgMusic');
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+    </script>
+</body>
+</html>
