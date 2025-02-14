@@ -142,8 +142,7 @@
         <div class="animation-slot">CACA</div>
         <h1>Happy Birthday My Love</h1>
         <p>I can't give you much yet, I hope you like it!💖</p>
-        <p>Klik 1X❤️ Untuk Musik, Seret Kebawah❤️ Untuk Surprise</p>
-        <div id="heart" class="heart-icon" draggable="true" onclick="playMusic()">❤️</div>
+        <div id="heart" class="heart-icon"><p>Double Tap!</p>❤️</div>
     </div>
     
     <div id="popupContainer" class="popup-container">
@@ -165,7 +164,7 @@
     
     <div id="surpriseContainer" class="surprise-container">
         <h2>Beautiful Memories Together❤️</h2>
-        <p class="text">Arahin panah mouse difoto yaa</p>
+        <p class="text">Arahin panah mouse difoto atau tap fotonya yaa</p>
         <div class="zigzag" id="zigzagContainer">
             <div data-bg="1.jpg">
                 <img src="1.jpg" alt="Kenangan 1">
@@ -218,21 +217,16 @@
         let heart = document.getElementById('heart');
         let mainContainer = document.getElementById('mainContainer');
         let popupContainer = document.getElementById('popupContainer');
-        let startY;
-
-        heart.addEventListener('dragstart', function(event) {
-            startY = event.clientY;
-        });
-
-        heart.addEventListener('dragend', function(event) {
-            let endY = event.clientY;
-            if (endY > startY + 50) {
-                mainContainer.style.opacity = '0';
-                setTimeout(() => {
-                    mainContainer.style.display = 'none';
-                    popupContainer.classList.add('popup-show');
-                }, 500);
-            }
+        let bgMusic = document.getElementById('bgMusic');
+        
+        heart.addEventListener('dblclick', function() {
+            bgMusic.play(); // Memutar musik
+            mainContainer.style.opacity = '0';
+            setTimeout(() => {
+                mainContainer.style.display = 'none';
+                popupContainer.classList.add('popup-show');
+                popupContainer.style.display = 'flex';
+            }, 500);
         });
 
         function showSurprise() {
