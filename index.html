@@ -10,7 +10,6 @@
             50% { background-position: 200%; }
             100% { background-position: -200%; }
         }
-
         body {
             font-family: 'Poppins', sans-serif;
             text-align: center;
@@ -20,8 +19,7 @@
             color: rgb(0, 0, 0);
             overflow: hidden;
         }
-
-        .container, .popup-container, .surprise-container {
+        .container, .popup-container {
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -33,12 +31,9 @@
             top: 0;
             left: 0;
             transition: all 0.6s ease-in-out;
-            padding: 20px;
-            box-sizing: border-box;
         }
-
         .animation-slot {
-            font-size: 5rem;
+            font-size: 10rem;
             font-weight: bold;
             color: rgb(0, 0, 0);
             background: linear-gradient(90deg, #ff7070, #e9e9e9, #ff7070);
@@ -47,81 +42,105 @@
             -webkit-text-fill-color: transparent;
             animation: glowingText 10s infinite linear;
         }
-
         .popup-container {
             display: none;
-            max-width: 90%;
-            border-radius: 10px;
+            background: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+            text-align: left;
+            padding: 20px; /* Menambahkan ruang di dalam container */
+            margin: 20px auto; /* Memberikan margin di sekeliling dan auto untuk center */
+            max-width: 600px; /* Membatasi lebar agar tidak terlalu besar */
+            border-radius: 10px; /* Memberikan sudut lembut */
+            /*box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Efek bayangan agar lebih elegan */
+            line-height: 1.6; /* Spasi antar baris agar lebih mudah dibaca */
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            text-align: center;
         }
 
         .popup-container video {
-            max-width: 80%;
+            max-width: 50%;
         }
-
         .surprise-container {
             display: none;
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background-size: cover;
             background-position: center;
+            padding: 40px;
             overflow-y: auto;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+            font-weight: bold;
+            -webkit-text-stroke: 0,5px black;
+            color: #ffffff;
+            text-align: rgb(214, 214, 214)center;
+            transition: background 0.5s ease-in-out;
         }
-
         .zigzag {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
         }
-
         .zigzag div {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 10px 0;
-            text-align: center;
-            flex-wrap: wrap;
+            margin: 20px 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         }
-
+        .zigzag div:nth-child(even) {
+            flex-direction: row-reverse;
+        }
         .zigzag img {
-            width: 100px;
-            height: 100px;
+            width: 180px;
+            height: 180px;
             border-radius: 15px;
-            margin: 10px;
+            margin: 15px;
+            transition: opacity 0.3s ease-in-out;
         }
-
+        .zigzag p {
+            max-width: 300px;
+            font-size: 20px;
+        }
+        .popup-show {
+            display: flex;
+            opacity: 1;
+        }
         .popup-container button, .surprise-container button {
             background-color: #ff3366;
             color: white;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
+            position: relative; /* Pastikan tombol tidak tersembunyi */
+    z-index: 10; /* Angka tinggi agar tombol di atas elemen lain */
+    width: auto; /* Jangan pakai width 100% agar tidak terlalu besar */
+    min-width: 150px; /* Pastikan tidak terlalu kecil */
+    padding: 14px 28px; /* Tambah padding untuk mudah diklik */
+    font-size: 20px; /* Perbesar teks agar jelas */
             cursor: pointer;
             border-radius: 5px;
-            margin-top: 10px;
+            margin-top: 20px;
             transition: background 0.3s ease;
         }
-
-        @media screen and (max-width: 600px) {
-            .animation-slot {
-                font-size: 3rem;
-            }
-            .popup-container button {
-                font-size: 16px;
-                padding: 10px;
-            }
-            .zigzag img {
-                width: 80px;
-                height: 80px;
-            }
+        .popup-container button:hover, .surprise-container button:hover {
+            background-color: #ff6699;
         }
+        .zigzag div:not(:hover) img {
+            opacity: 0.4;
+        }
+        .heart-icon {
+            width: fit-content;
+        }
+        .text {
+            color:rgb(0, 0, 0);
+        }
+        @media screen and (max-width: 600px) {
+    .popup-container button, .surprise-container button {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+}
     </style>
 </head>
 <body>
@@ -150,7 +169,7 @@
             <p>Happy birthday, my love! I hope this day brings you as much joy as you bring into my life every single day I wish you all the happiness, success, and love you deserve, not only today but throughout the entire year</p>
             
             <p>Always and forever yours,❤️</p>
-            <button onclick="showSurprise()">Kejutan Selanjutnya</button>
+        <button onclick="showSurprise()">Kejutan Selanjutnya</button>
     </div>
     
     <div id="surpriseContainer" class="surprise-container">
@@ -194,6 +213,17 @@
     </div>
 
     <script>
+        let surpriseContainer = document.getElementById('surpriseContainer');
+        let zigzagContainer = document.getElementById('zigzagContainer');
+        
+        zigzagContainer.addEventListener('mouseover', function(event) {
+            if (event.target.tagName === 'IMG') {
+                let parentDiv = event.target.closest('div');
+                let newBg = parentDiv.getAttribute('data-bg');
+                surpriseContainer.style.backgroundImage = `url('${newBg}')`;
+            }
+        });
+
         let heart = document.getElementById('heart');
         let mainContainer = document.getElementById('mainContainer');
         let popupContainer = document.getElementById('popupContainer');
@@ -208,52 +238,30 @@
                 popupContainer.style.display = 'flex';
             }, 500);
         });
-        let lastTap = 0;
-heart.addEventListener('touchstart', function() {
-    let currentTime = new Date().getTime();
-    let tapLength = currentTime - lastTap;
-    if (tapLength < 100 && tapLength > 0) { // Double tap dalam 500ms
-        bgMusic.play(); // Memutar musik
-        mainContainer.style.opacity = '0';
-        setTimeout(() => {
-            mainContainer.style.display = 'none';
-            popupContainer.classList.add('popup-show');
-            popupContainer.style.display = 'flex';
-        }, 500);
-    }
-    lastTap = currentTime;
-});
-zigzagContainer.addEventListener('mouseover', changeBackground);
-zigzagContainer.addEventListener('touchstart', changeBackground);
 
-function changeBackground(event) {
-    if (event.target.tagName === 'IMG') {
-        let parentDiv = event.target.closest('div');
-        let newBg = parentDiv.getAttribute('data-bg');
-        surpriseContainer.style.backgroundImage = `url('${newBg}')`;
-    }
-}
-document.body.addEventListener('touchstart', function() {
-    if (bgMusic.paused) {
-        bgMusic.play();
-    }
-}, { once: true }); // Hanya berjalan sekali
-function showSurprise() {
-    popupContainer.classList.remove('popup-show');
-    setTimeout(() => {
-        popupContainer.style.display = 'none';
-        surpriseContainer.style.display = 'flex';
-    }, 500);
-}
-function closeSurprise() {
-    surpriseContainer.style.opacity = '0';
-    setTimeout(() => {
-        surpriseContainer.style.display = 'none';
-        mainContainer.style.display = 'flex';
-        mainContainer.style.opacity = '1';
-    }, 500);
-}
+        function showSurprise() {
+            popupContainer.classList.remove('popup-show');
+            setTimeout(() => {
+                popupContainer.style.display = 'none';
+                surpriseContainer.style.display = 'block';
+            }, 500);
+        }
 
+        function closeSurprise() {
+            surpriseContainer.style.display = 'none';
+            setTimeout(() => {
+                mainContainer.style.display = 'block';
+                mainContainer.style.opacity = '1';
+            }, 500);
+        }
+        function playMusic() {
+            let music = document.getElementById('bgMusic');
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
     </script>
 </body>
 </html>
