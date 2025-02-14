@@ -10,6 +10,16 @@
             50% { background-position: 200%; }
             100% { background-position: -200%; }
         }
+        @media screen and (max-width: 600px) {
+    .popup-container {
+        width: 90%;
+    }
+    .popup-container button {
+        font-size: 18px;
+        padding: 15px;
+    }
+}
+
         body {
             font-family: 'Poppins', sans-serif;
             text-align: center;
@@ -159,7 +169,7 @@
             <p>Happy birthday, my love! I hope this day brings you as much joy as you bring into my life every single day I wish you all the happiness, success, and love you deserve, not only today but throughout the entire year</p>
             
             <p>Always and forever yours,❤️</p>
-        <button onclick="showSurprise()">Kejutan Selanjutnya</button>
+            <button onclick="showSurprise()">Kejutan Selanjutnya</button>
     </div>
     
     <div id="surpriseContainer" class="surprise-container">
@@ -203,17 +213,6 @@
     </div>
 
     <script>
-        let surpriseContainer = document.getElementById('surpriseContainer');
-        let zigzagContainer = document.getElementById('zigzagContainer');
-        
-        zigzagContainer.addEventListener('mouseover', function(event) {
-            if (event.target.tagName === 'IMG') {
-                let parentDiv = event.target.closest('div');
-                let newBg = parentDiv.getAttribute('data-bg');
-                surpriseContainer.style.backgroundImage = `url('${newBg}')`;
-            }
-        });
-
         let heart = document.getElementById('heart');
         let mainContainer = document.getElementById('mainContainer');
         let popupContainer = document.getElementById('popupContainer');
@@ -228,30 +227,52 @@
                 popupContainer.style.display = 'flex';
             }, 500);
         });
+        let lastTap = 0;
+heart.addEventListener('touchstart', function() {
+    let currentTime = new Date().getTime();
+    let tapLength = currentTime - lastTap;
+    if (tapLength < 100 && tapLength > 0) { // Double tap dalam 500ms
+        bgMusic.play(); // Memutar musik
+        mainContainer.style.opacity = '0';
+        setTimeout(() => {
+            mainContainer.style.display = 'none';
+            popupContainer.classList.add('popup-show');
+            popupContainer.style.display = 'flex';
+        }, 500);
+    }
+    lastTap = currentTime;
+});
+zigzagContainer.addEventListener('mouseover', changeBackground);
+zigzagContainer.addEventListener('touchstart', changeBackground);
 
-        function showSurprise() {
-            popupContainer.classList.remove('popup-show');
-            setTimeout(() => {
-                popupContainer.style.display = 'none';
-                surpriseContainer.style.display = 'block';
-            }, 500);
-        }
+function changeBackground(event) {
+    if (event.target.tagName === 'IMG') {
+        let parentDiv = event.target.closest('div');
+        let newBg = parentDiv.getAttribute('data-bg');
+        surpriseContainer.style.backgroundImage = `url('${newBg}')`;
+    }
+}
+document.body.addEventListener('touchstart', function() {
+    if (bgMusic.paused) {
+        bgMusic.play();
+    }
+}, { once: true }); // Hanya berjalan sekali
+function showSurprise() {
+    popupContainer.classList.remove('popup-show');
+    setTimeout(() => {
+        popupContainer.style.display = 'none';
+        surpriseContainer.style.display = 'flex';
+    }, 500);
+}
+function closeSurprise() {
+    surpriseContainer.style.opacity = '0';
+    setTimeout(() => {
+        surpriseContainer.style.display = 'none';
+        mainContainer.style.display = 'flex';
+        mainContainer.style.opacity = '1';
+    }, 500);
+}
 
-        function closeSurprise() {
-            surpriseContainer.style.display = 'none';
-            setTimeout(() => {
-                mainContainer.style.display = 'block';
-                mainContainer.style.opacity = '1';
-            }, 500);
-        }
-        function playMusic() {
-            let music = document.getElementById('bgMusic');
-            if (music.paused) {
-                music.play();
-            } else {
-                music.pause();
-            }
-        }
     </script>
 </body>
 </html>
