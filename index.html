@@ -43,22 +43,25 @@
             animation: glowingText 10s infinite linear;
         }
         .popup-container {
-            display: none;
-            background: #ffffff;
-            font-family: 'Times New Roman', Times, serif;
-            text-align: left;
-            padding: 20px; /* Menambahkan ruang di dalam container */
-            overflow-y: auto;
-            margin: 20px auto; /* Memberikan margin di sekeliling dan auto untuk center */
-            max-width: 600px; /* Membatasi lebar agar tidak terlalu besar */
-            border-radius: 10px; /* Memberikan sudut lembut */
-            /*box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Efek bayangan agar lebih elegan */
-            line-height: 1.6; /* Spasi antar baris agar lebih mudah dibaca */
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+    display: none;
+    background: #ffffff;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: left;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    max-height: 80vh; /* Batasi tinggi agar bisa di-scroll */
+    border-radius: 10px;
+    line-height: 1.6;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow-y: auto; /* Aktifkan scroll */
+    overscroll-behavior: contain; /* Mencegah scroll terlalu jauh */
+    -webkit-overflow-scrolling: touch; /* Scroll lebih smooth di iPhone */
+}
+
 
         .popup-container video {
             max-width: 50%;
