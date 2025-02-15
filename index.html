@@ -48,6 +48,7 @@
             font-family: 'Times New Roman', Times, serif;
             text-align: left;
             padding: 20px; /* Menambahkan ruang di dalam container */
+            overflow-y: auto;
             margin: 20px auto; /* Memberikan margin di sekeliling dan auto untuk center */
             max-width: 600px; /* Membatasi lebar agar tidak terlalu besar */
             border-radius: 10px; /* Memberikan sudut lembut */
@@ -112,19 +113,20 @@
             background-color: #ff3366;
             color: white;
             border: none;
-            position: relative; /* Pastikan tombol tidak tersembunyi */
-    z-index: 10; /* Angka tinggi agar tombol di atas elemen lain */
-    width: auto; /* Jangan pakai width 100% agar tidak terlalu besar */
-    min-width: 150px; /* Pastikan tidak terlalu kecil */
-    padding: 14px 28px; /* Tambah padding untuk mudah diklik */
-    font-size: 20px; /* Perbesar teks agar jelas */
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
-            margin-top: 20px;
+            margin-top: 10px;
             transition: background 0.3s ease;
         }
-        .popup-container button:hover, .surprise-container button:hover {
-            background-color: #ff6699;
+        @media screen and (max-width: 600px) {
+            
+            .popup-container button {
+                font-size: 16px;
+                padding: 10px;
+            }
+            
         }
         .zigzag div:not(:hover) img {
             opacity: 0.4;
